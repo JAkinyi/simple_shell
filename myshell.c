@@ -66,45 +66,21 @@ int main(int argc, char **argv)
 	}
 
 	buffer = (char *)malloc(bufsize * sizeof(char));
-
-									if (buffer == NULL)
-
-											{
-
-														perror("Unable to allocate buffer");
-
-																exit(1);
-
-																	}
-
-
-
-										do {
-
-													if (isatty(fileno(stdin)))
-
-																{
-
-																				isPipe = 1;
-
-																							_puts("cisfun#: ");
-
-																									}
-
-
-
-															getline(&buffer, &bufsize, stdin);
-
-																	buffer[_strlen(buffer) - 1] = '\0';
-
-																			tokens = stringToTokens(buffer);
-
-																					response = execute(tokens);
-
-																						} while (isPipe && response != -1);
-
-
-
-											return (0);
-
+	if (buffer == NULL)
+	{
+		perror("Unable to allocate buffer");
+		exit(1);
+	}
+	do {
+		if (isatty(fileno(stdin)))
+		{
+			isPipe = 1;
+			_puts("cisfun#: ");
+		}
+		getline(&buffer, &bufsize, stdin);
+		buffer[_strlen(buffer) - 1] = '\0';
+		tokens = stringToWords(buffer);
+		response = execute(tokens);
+	} while (isPipe && response != -1);
+	return (0);
 }
